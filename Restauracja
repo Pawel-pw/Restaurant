@@ -1,1 +1,135 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot Restauracja</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .chatbox {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-log {
+      height: 400px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fff;
+      margin-bottom: 10px;
+    }
+
+    .chat-log p {
+      margin: 8px 0;
+    }
+
+    .user { text-align: right; color: #444; }
+    .bot { text-align: left; color: #2b7a78; }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 8px 14px;
+      background: #2b7a78;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #205e5d;
+    }
+  </style>
+</head>
+<body>
+
+<div class="chatbox">
+  <h2>🍽️ Chatbot Restauracyjny</h2>
+  <div class="chat-log" id="chatLog">
+    <p class="bot">👋 Witaj w naszej restauracji! W czym mogę pomóc?</p>
+    <p class="bot">Możesz napisać: <br><strong>"menu"</strong>, <strong>"rezerwacja"</strong>, <strong>"zamówienie"</strong>, <strong>"newsletter"</strong></p>
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Napisz coś..." />
+    <button onclick="handleUserInput()">Wyślij</button>
+  </div>
+</div>
+
+<script>
+  function handleUserInput() {
+    const input = document.getElementById("userInput");
+    const chatLog = document.getElementById("chatLog");
+    const message = input.value.trim();
+
+    if (!message) return;
+
+    // Dodaj wiadomość użytkownika
+    chatLog.innerHTML += `<p class="user">${message}</p>`;
+    input.value = "";
+
+    // Reakcje bota
+    let response = "";
+
+    const msg = message.toLowerCase();
+
+    if (msg.includes("menu")) {
+      response = `🍕 Menu:<br>
+        - Margherita – 26 zł<br>
+        - Pepperoni – 32 zł<br>
+        - Sałatka Cezar – 28 zł<br>
+        - Lemoniada – 12 zł`;
+    } else if (msg.includes("rezerwacj")) {
+      response = `📅 Aby zarezerwować stolik, napisz:<br>
+        "Rezerwacja na [data], godz. [godzina], dla [ilość osób], na nazwisko [imię]"`;
+    } else if (msg.includes("zamówienie")) {
+      response = `🛍️ Aby złożyć zamówienie, napisz: <br>
+        "Zamawiam [danie] na adres [adres]"`;
+    } else if (msg.includes("newsletter")) {
+      response = `📩 Podaj swój e-mail, aby zapisać się do newslettera i otrzymywać promocje!`;
+    } else if (msg.includes("@") && msg.includes(".")) {
+      response = `✅ Dziękujemy! Twój adres został zapisany do newslettera.`;
+    } else if (msg.includes("zamawiam")) {
+      response = `✅ Zamówienie przyjęte! Wysyłamy je na podany adres w ciągu 40 minut 🚗`;
+    } else if (msg.includes("rezerwacja na")) {
+      response = `✅ Stolik został zarezerwowany! Czekamy na Ciebie 😊`;
+    } else {
+      response = `❓ Przepraszam, nie rozumiem. Napisz np. "menu", "rezerwacja", "zamówienie", "newsletter".`;
+    }
+
+    // Dodaj odpowiedź bota
+    setTimeout(() => {
+      chatLog.innerHTML += `<p class="bot">${response}</p>`;
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }, 400);
+  }
+</script>
+
+</body>
+</html>
 
