@@ -3,106 +3,297 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chatbot Restauracja</title>
+  <title>Restauracja La Bella</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    header {
+      background-color: #800000;
+      color: white;
+      padding: 20px 40px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      background: url('https://source.unsplash.com/1600x600/?restaurant') center/cover no-repeat;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 2px 2px 5px black;
+      font-size: 2.5rem;
+      text-align: center;
       padding: 40px;
     }
-    .chatbox {
-      width: 100%;
-      max-width: 420px;
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+
+    section {
+      padding: 60px 40px;
+      max-width: 1000px;
+      margin: auto;
     }
-    .chat-log {
-      height: 400px;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 8px;
-      background: #fff;
-      margin-bottom: 10px;
+
+    h2 {
+      margin-top: 0;
+      color: #800000;
     }
-    .chat-log p {
-      margin: 8px 0;
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
     }
-    .user { text-align: right; color: #444; }
-    .bot { text-align: left; color: #2b7a78; }
-    .input-area {
-      display: flex;
+
+    .menu-item {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: #fafafa;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 10px;
     }
-    input {
-      flex: 1;
-      padding: 8px;
+
+    .gallery img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 6px;
     }
-    button {
-      padding: 8px 14px;
-      background: #2b7a78;
+
+    form button {
+      background-color: #800000;
       color: white;
+      padding: 10px 20px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
-      background: #205e5d;
+
+    footer {
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
     }
+
+    /* Chatbot bubble */
+    .chatbot-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #800000;
+      color: white;
+      padding: 15px 18px;
+      border-radius: 50%;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+
+    .chatbot-window {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 350px;
+      height: 500px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 999;
+      flex-direction: column;
+    }
+
+    .chat-log {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .chat-log p {
+      margin: 5px 0;
+    }
+
+    .bot { color: #800000; }
+    .user { text-align: right; }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 8px;
+    }
+
+    .chat-input button {
+      background-color: #800000;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
-  <div class="chatbox">
-    <h2>🍽️ Chatbot Restauracyjny</h2>
-    <div class="chat-log" id="chatLog">
-      <p class="bot">👋 Witaj w naszej restauracji! W czym mogę pomóc?</p>
-      <p class="bot">Możesz napisać: <br><strong>"menu"</strong>, <strong>"rezerwacja"</strong>, <strong>"zamówienie"</strong>, <strong>"newsletter"</strong></p>
+
+<header>
+  <h1>La Bella</h1>
+  <nav>
+    <a href="#onas">O nas</a>
+    <a href="#menu">Menu</a>
+    <a href="#rezerwacja">Rezerwacja</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+</header>
+
+<div class="hero">
+  Witaj w Restauracji La Bella!
+</div>
+
+<section id="onas">
+  <h2>O nas</h2>
+  <p>Restauracja La Bella to połączenie włoskiej tradycji z nowoczesnym smakiem. Od 2010 roku serwujemy dania przygotowane z pasją i świeżych składników.</p>
+</section>
+
+<section id="menu">
+  <h2>Nasze menu</h2>
+  <div class="menu-grid">
+    <div class="menu-item">
+      <strong>Margherita</strong><br>26 zł
     </div>
-    <div class="input-area">
-      <input type="text" id="userInput" placeholder="Napisz coś..." />
-      <button onclick="handleUserInput()">Wyślij</button>
+    <div class="menu-item">
+      <strong>Pasta Carbonara</strong><br>34 zł
+    </div>
+    <div class="menu-item">
+      <strong>Sałatka Caprese</strong><br>22 zł
+    </div>
+    <div class="menu-item">
+      <strong>Tiramisu</strong><br>16 zł
+    </div>
+    <div class="menu-item">
+      <strong>Espresso</strong><br>10 zł
     </div>
   </div>
+</section>
 
-  <script>
-    function handleUserInput() {
-      const input = document.getElementById("userInput");
-      const chatLog = document.getElementById("chatLog");
-      const message = input.value.trim();
-      if (!message) return;
-      chatLog.innerHTML += `<p class="user">${message}</p>`;
-      input.value = "";
-      let response = "";
-      const msg = message.toLowerCase();
-      if (msg.includes("menu")) {
-        response = `🍕 Menu:<br>- Margherita – 26 zł<br>- Pepperoni – 32 zł<br>- Sałatka Cezar – 28 zł<br>- Lemoniada – 12 zł`;
-      } else if (msg.includes("rezerwacj")) {
-        response = `📅 Aby zarezerwować stolik, napisz:<br>"Rezerwacja na [data], godz. [godzina], dla [ilość osób], na nazwisko [imię]"`;
-      } else if (msg.includes("zamówienie")) {
-        response = `🛍️ Aby złożyć zamówienie, napisz: <br>"Zamawiam [danie] na adres [adres]"`;
-      } else if (msg.includes("newsletter")) {
-        response = `📩 Podaj swój e-mail, aby zapisać się do newslettera i otrzymywać promocje!`;
-      } else if (msg.includes("@") && msg.includes(".")) {
-        response = `✅ Dziękujemy! Twój adres został zapisany do newslettera.`;
-      } else if (msg.includes("zamawiam")) {
-        response = `✅ Zamówienie przyjęte! Wysyłamy je na podany adres w ciągu 40 minut 🚗`;
-      } else if (msg.includes("rezerwacja na")) {
-        response = `✅ Stolik został zarezerwowany! Czekamy na Ciebie 😊`;
-      } else {
-        response = `❓ Przepraszam, nie rozumiem. Napisz np. "menu", "rezerwacja", "zamówienie", "newsletter".`;
-      }
-      setTimeout(() => {
-        chatLog.innerHTML += `<p class="bot">${response}</p>`;
-        chatLog.scrollTop = chatLog.scrollHeight;
-      }, 400);
+<section id="rezerwacja">
+  <h2>Zarezerwuj stolik</h2>
+  <form>
+    <input type="text" placeholder="Imię i nazwisko" required>
+    <input type="text" placeholder="Data i godzina" required>
+    <input type="number" placeholder="Liczba osób" required>
+    <textarea placeholder="Dodatkowe uwagi"></textarea>
+    <button type="submit">Zarezerwuj</button>
+  </form>
+</section>
+
+<section id="galeria">
+  <h2>Galeria</h2>
+  <div class="gallery">
+    <img src="https://source.unsplash.com/400x300/?pasta" alt="">
+    <img src="https://source.unsplash.com/400x300/?pizza" alt="">
+    <img src="https://source.unsplash.com/400x300/?restaurant,interior" alt="">
+    <img src="https://source.unsplash.com/400x300/?wine" alt="">
+    <img src="https://source.unsplash.com/400x300/?chef" alt="">
+    <img src="https://source.unsplash.com/400x300/?dessert" alt="">
+  </div>
+</section>
+
+<section id="kontakt">
+  <h2>Kontakt</h2>
+  <p><strong>📍 Adres:</strong> ul. Smakowa 12, Warszawa</p>
+  <p><strong>📞 Telefon:</strong> 123 456 789</p>
+  <p><strong>📧 Email:</strong> kontakt@labella.pl</p>
+  <iframe src="https://www.google.com/maps?q=Warszawa,+Polska&output=embed" width="100%" height="300" style="border:0;" allowfullscreen></iframe>
+</section>
+
+<footer>
+  &copy; 2025 La Bella – Wszystkie prawa zastrzeżone
+</footer>
+
+<!-- CHATBOT -->
+<button class="chatbot-button" onclick="toggleChat()">💬</button>
+
+<div class="chatbot-window" id="chatbotWindow">
+  <div class="chat-log" id="chatLog">
+    <p class="bot">👋 Cześć! W czym mogę pomóc?</p>
+    <p class="bot">Napisz: menu, rezerwacja, zamówienie, newsletter</p>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Napisz wiadomość...">
+    <button onclick="handleUserInput()">Wyślij</button>
+  </div>
+</div>
+
+<script>
+  function toggleChat() {
+    const chat = document.getElementById("chatbotWindow");
+    chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+  }
+
+  function handleUserInput() {
+    const input = document.getElementById("userInput");
+    const chatLog = document.getElementById("chatLog");
+    const message = input.value.trim();
+    if (!message) return;
+    chatLog.innerHTML += `<p class="user">${message}</p>`;
+    input.value = "";
+    let response = "";
+    const msg = message.toLowerCase();
+    if (msg.includes("menu")) {
+      response = `🍕 Menu:<br>Margherita – 26 zł<br>Pasta Carbonara – 34 zł<br>Tiramisu – 16 zł`;
+    } else if (msg.includes("rezerwacj")) {
+      response = `📅 Aby zarezerwować stolik, wypełnij formularz powyżej lub napisz: "Rezerwacja na jutro o 18:00 dla 2 osób."`;
+    } else if (msg.includes("zamówienie")) {
+      response = `🛵 Zamówienia online przyjmujemy telefonicznie. Zadzwoń: 123 456 789`;
+    } else if (msg.includes("newsletter")) {
+      response = `📩 Zapisz się do naszego newslettera, a otrzymasz rabat 10%!`;
+    } else {
+      response = `❓ Przepraszam, nie rozumiem. Napisz: menu, rezerwacja, zamówienie, newsletter`;
     }
-  </script>
+    setTimeout(() => {
+      chatLog.innerHTML += `<p class="bot">${response}</p>`;
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }, 300);
+  }
+</script>
+
 </body>
 </html>
