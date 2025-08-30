@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restauracja La Bella</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet">
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff;
-      color: #333;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      background-color: #fff8f6;
+      color: #2c2c2c;
     }
 
     header {
-      background-color: #800000;
-      color: white;
+      background-color: #7b0000;
       padding: 20px 40px;
+      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
 
-    header nav a {
+    header h1 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    nav a {
       color: white;
       margin-left: 20px;
       text-decoration: none;
@@ -32,268 +40,129 @@
     }
 
     .hero {
-      background: url('https://source.unsplash.com/1600x600/?restaurant') center/cover no-repeat;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-shadow: 2px 2px 5px black;
-      font-size: 2.5rem;
+      background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092');
+      background-size: cover;
+      background-position: center;
+      padding: 100px 20px;
       text-align: center;
-      padding: 40px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero h2 {
+      font-size: 48px;
+      font-family: 'Playfair Display', serif;
     }
 
     section {
-      padding: 60px 40px;
+      padding: 60px 20px;
       max-width: 1000px;
       margin: auto;
     }
 
-    h2 {
-      margin-top: 0;
-      color: #800000;
+    section h3 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #7b0000;
     }
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 20px;
     }
 
-    .menu-item {
-      border: 1px solid #ddd;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: #fafafa;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-    }
-
-    .gallery img {
-      width: 100%;
-      border-radius: 8px;
-    }
-
-    form input, form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    form button {
-      background-color: #800000;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    footer {
-      background-color: #f0f0f0;
-      text-align: center;
-      padding: 30px;
-      font-size: 0.9rem;
-    }
-
-    /* Chatbot bubble */
-    .chatbot-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #800000;
-      color: white;
-      padding: 15px 18px;
-      border-radius: 50%;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      z-index: 999;
-    }
-
-    .chatbot-window {
-      display: none;
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      width: 350px;
-      height: 500px;
+    .menu-card {
       background-color: white;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      z-index: 999;
-      flex-direction: column;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .chat-log {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-      border-bottom: 1px solid #ddd;
+    .menu-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
-    .chat-log p {
-      margin: 5px 0;
+    .chatbot {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: white;
+      border-radius: 12px;
+      width: 320px;
+      max-height: 500px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      padding: 16px;
+      font-size: 14px;
+      animation: slideIn 0.5s ease forwards;
     }
 
-    .bot { color: #800000; }
-    .user { text-align: right; }
-
-    .chat-input {
-      display: flex;
-      padding: 10px;
-      gap: 10px;
+    @keyframes slideIn {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
-    .chat-input input {
-      flex: 1;
+    .chatbot textarea {
+      width: 100%;
       padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      resize: none;
     }
 
-    .chat-input button {
-      background-color: #800000;
+    .chatbot button {
+      background-color: #7b0000;
       color: white;
       border: none;
-      padding: 8px 14px;
+      padding: 8px 12px;
       border-radius: 6px;
+      margin-top: 10px;
       cursor: pointer;
+      float: right;
     }
-
   </style>
 </head>
 <body>
 
-<header>
-  <h1>La Bella</h1>
-  <nav>
-    <a href="#onas">O nas</a>
-    <a href="#menu">Menu</a>
-    <a href="#rezerwacja">Rezerwacja</a>
-    <a href="#galeria">Galeria</a>
-    <a href="#kontakt">Kontakt</a>
-  </nav>
-</header>
+  <header>
+    <h1>La Bella</h1>
+    <nav>
+      <a href="#">O nas</a>
+      <a href="#">Menu</a>
+      <a href="#">Rezerwacja</a>
+      <a href="#">Galeria</a>
+      <a href="#">Kontakt</a>
+    </nav>
+  </header>
 
-<div class="hero">
-  Witaj w Restauracji La Bella!
-</div>
-
-<section id="onas">
-  <h2>O nas</h2>
-  <p>Restauracja La Bella to połączenie włoskiej tradycji z nowoczesnym smakiem. Od 2010 roku serwujemy dania przygotowane z pasją i świeżych składników.</p>
-</section>
-
-<section id="menu">
-  <h2>Nasze menu</h2>
-  <div class="menu-grid">
-    <div class="menu-item">
-      <strong>Margherita</strong><br>26 zł
-    </div>
-    <div class="menu-item">
-      <strong>Pasta Carbonara</strong><br>34 zł
-    </div>
-    <div class="menu-item">
-      <strong>Sałatka Caprese</strong><br>22 zł
-    </div>
-    <div class="menu-item">
-      <strong>Tiramisu</strong><br>16 zł
-    </div>
-    <div class="menu-item">
-      <strong>Espresso</strong><br>10 zł
-    </div>
+  <div class="hero">
+    <h2>Witaj w Restauracji La Bella!</h2>
   </div>
-</section>
 
-<section id="rezerwacja">
-  <h2>Zarezerwuj stolik</h2>
-  <form>
-    <input type="text" placeholder="Imię i nazwisko" required>
-    <input type="text" placeholder="Data i godzina" required>
-    <input type="number" placeholder="Liczba osób" required>
-    <textarea placeholder="Dodatkowe uwagi"></textarea>
-    <button type="submit">Zarezerwuj</button>
-  </form>
-</section>
+  <section>
+    <h3>O nas</h3>
+    <p>Restauracja La Bella to połączenie włoskiej tradycji z nowoczesnym smakiem. Od 2010 roku serwujemy dania przygotowane z pasją i świeżych składników.</p>
+  </section>
 
-<section id="galeria">
-  <h2>Galeria</h2>
-  <div class="gallery">
-    <img src="https://source.unsplash.com/400x300/?pasta" alt="">
-    <img src="https://source.unsplash.com/400x300/?pizza" alt="">
-    <img src="https://source.unsplash.com/400x300/?restaurant,interior" alt="">
-    <img src="https://source.unsplash.com/400x300/?wine" alt="">
-    <img src="https://source.unsplash.com/400x300/?chef" alt="">
-    <img src="https://source.unsplash.com/400x300/?dessert" alt="">
+  <section>
+    <h3>Nasze menu</h3>
+    <div class="menu-grid">
+      <div class="menu-card"><strong>Margherita</strong><br>26 zł</div>
+      <div class="menu-card"><strong>Pasta Carbonara</strong><br>34 zł</div>
+      <div class="menu-card"><strong>Sałatka Caprese</strong><br>22 zł</div>
+      <div class="menu-card"><strong>Tiramisu</strong><br>16 zł</div>
+      <div class="menu-card"><strong>Espresso</strong><br>10 zł</div>
+    </div>
+  </section>
+
+  <div class="chatbot">
+    <p><strong>🤖 Cześć! W czym mogę pomóc?</strong><br>Napisz: <em>menu, rezerwacja, zamówienie</em></p>
+    <textarea rows="2" placeholder="Napisz wiadomość..."></textarea>
+    <button>Wyślij</button>
   </div>
-</section>
-
-<section id="kontakt">
-  <h2>Kontakt</h2>
-  <p><strong>📍 Adres:</strong> ul. Smakowa 12, Warszawa</p>
-  <p><strong>📞 Telefon:</strong> 123 456 789</p>
-  <p><strong>📧 Email:</strong> kontakt@labella.pl</p>
-  <iframe src="https://www.google.com/maps?q=Warszawa,+Polska&output=embed" width="100%" height="300" style="border:0;" allowfullscreen></iframe>
-</section>
-
-<footer>
-  &copy; 2025 La Bella – Wszystkie prawa zastrzeżone
-</footer>
-
-<!-- CHATBOT -->
-<button class="chatbot-button" onclick="toggleChat()">💬</button>
-
-<div class="chatbot-window" id="chatbotWindow">
-  <div class="chat-log" id="chatLog">
-    <p class="bot">👋 Cześć! W czym mogę pomóc?</p>
-    <p class="bot">Napisz: menu, rezerwacja, zamówienie, newsletter</p>
-  </div>
-  <div class="chat-input">
-    <input type="text" id="userInput" placeholder="Napisz wiadomość...">
-    <button onclick="handleUserInput()">Wyślij</button>
-  </div>
-</div>
-
-<script>
-  function toggleChat() {
-    const chat = document.getElementById("chatbotWindow");
-    chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-  }
-
-  function handleUserInput() {
-    const input = document.getElementById("userInput");
-    const chatLog = document.getElementById("chatLog");
-    const message = input.value.trim();
-    if (!message) return;
-    chatLog.innerHTML += `<p class="user">${message}</p>`;
-    input.value = "";
-    let response = "";
-    const msg = message.toLowerCase();
-    if (msg.includes("menu")) {
-      response = `🍕 Menu:<br>Margherita – 26 zł<br>Pasta Carbonara – 34 zł<br>Tiramisu – 16 zł`;
-    } else if (msg.includes("rezerwacj")) {
-      response = `📅 Aby zarezerwować stolik, wypełnij formularz powyżej lub napisz: "Rezerwacja na jutro o 18:00 dla 2 osób."`;
-    } else if (msg.includes("zamówienie")) {
-      response = `🛵 Zamówienia online przyjmujemy telefonicznie. Zadzwoń: 123 456 789`;
-    } else if (msg.includes("newsletter")) {
-      response = `📩 Zapisz się do naszego newslettera, a otrzymasz rabat 10%!`;
-    } else {
-      response = `❓ Przepraszam, nie rozumiem. Napisz: menu, rezerwacja, zamówienie, newsletter`;
-    }
-    setTimeout(() => {
-      chatLog.innerHTML += `<p class="bot">${response}</p>`;
-      chatLog.scrollTop = chatLog.scrollHeight;
-    }, 300);
-  }
-</script>
 
 </body>
 </html>
