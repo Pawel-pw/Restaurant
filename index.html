@@ -97,6 +97,7 @@
       padding: 16px;
       font-size: 14px;
       animation: slideIn 0.5s ease forwards;
+      overflow-y: auto;
     }
 
     @keyframes slideIn {
@@ -122,6 +123,10 @@
       margin-top: 10px;
       cursor: pointer;
       float: right;
+    }
+
+    .chatbot p {
+      margin: 10px 0;
     }
   </style>
 </head>
@@ -163,6 +168,54 @@
     <textarea rows="2" placeholder="Napisz wiadomość..."></textarea>
     <button>Wyślij</button>
   </div>
+
+  <script>
+    const textarea = document.querySelector('.chatbot textarea');
+    const button = document.querySelector('.chatbot button');
+    const box = document.querySelector('.chatbot');
+
+    async function sendMessage() {
+      const message = textarea.value.trim();
+      if (message === "") return;
+
+      // Wyświetl wiadomość użytkownika
+      const userMsg = document.createElement('p');
+      userMsg.innerHTML = `<strong>Ty:</strong> ${message}`;
+      box.appendChild(userMsg);
+
+      textarea.value = "";
+
+      try {
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+
+        const botMsg = document.createElement('p');
+        botMsg.innerHTML = `<strong>Bot:</strong> ${data.reply}`;
+        box.appendChild(botMsg);
+        box.scrollTop = box.scrollHeight;
+      } catch (err) {
+        const errMsg = document.createElement('p');
+        errMsg.innerHTML = `<strong>Bot:</strong> Wystąpił błąd po stronie serwera.`;
+        box.appendChild(errMsg);
+      }
+    }
+
+    button.addEventListener("click", sendMessage);
+
+    textarea.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
 
 </body>
 </html>
